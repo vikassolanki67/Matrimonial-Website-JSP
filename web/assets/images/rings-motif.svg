@@ -1,0 +1,32 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two interlocking rings, the mark of a joined life">
+    <defs>
+        <linearGradient id="motifRingA" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#E91E63"/>
+            <stop offset="100%" stop-color="#AD1457"/>
+        </linearGradient>
+        <linearGradient id="motifRingB" x1="1" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#6A1B9A"/>
+            <stop offset="100%" stop-color="#4A148C"/>
+        </linearGradient>
+    </defs>
+
+    <!-- outer orbit, faint -->
+    <circle cx="200" cy="200" r="182" fill="none" stroke="#C9A227" stroke-width="1" stroke-dasharray="2 10" opacity="0.5"/>
+
+    <!-- mandala corner petals -->
+    <g opacity="0.55" stroke="#C9A227" stroke-width="1.4" fill="none">
+        <path d="M200 30 C 214 55, 214 75, 200 92 C 186 75, 186 55, 200 30 Z"/>
+        <path d="M200 370 C 214 345, 214 325, 200 308 C 186 325, 186 345, 200 370 Z"/>
+        <path d="M30 200 C 55 186, 75 186, 92 200 C 75 214, 55 214, 30 200 Z"/>
+        <path d="M370 200 C 345 186, 325 186, 308 200 C 325 214, 345 214, 370 200 Z"/>
+    </g>
+
+    <!-- the two interlocking rings -->
+    <circle cx="163" cy="200" r="86" fill="none" stroke="url(#motifRingA)" stroke-width="9"/>
+    <circle cx="237" cy="200" r="86" fill="none" stroke="url(#motifRingB)" stroke-width="9"/>
+
+    <!-- gold accent at the union -->
+    <circle cx="200" cy="200" r="5" fill="#C9A227"/>
+    <circle cx="200" cy="158" r="2.4" fill="#C9A227" opacity="0.8"/>
+    <circle cx="200" cy="242" r="2.4" fill="#C9A227" opacity="0.8"/>
+</svg>

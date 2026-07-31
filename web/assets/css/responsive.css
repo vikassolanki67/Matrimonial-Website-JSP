@@ -1,0 +1,72 @@
+/* ==========================================================================
+   RESPONSIVE.CSS — breakpoint refinements
+   Loaded last so it can safely override component rules at narrower widths.
+   Breakpoints follow Bootstrap 5: <576 phone, 576-767 large phone,
+   768-991 tablet, 992-1199 laptop, >=1200 desktop.
+   ========================================================================== */
+
+/* ---- Laptop / small desktop ---- */
+@media (max-width: 1199px) {
+    .stat-band { grid-template-columns: repeat(2, 1fr); row-gap: 30px; }
+}
+
+/* ---- Tablet ---- */
+@media (max-width: 991px) {
+    .section { padding: 72px 0; }
+    .hero { padding: 130px 0 80px; text-align: center; }
+    .hero .hero-cta { justify-content: center; }
+    .hero .hero-stats { justify-content: center; }
+    .hero-art { margin-top: 50px; }
+    .quick-actions { grid-template-columns: repeat(2, 1fr); }
+    .nav-search { margin-left:15px;  }
+    .site-navbar .navbar-collapse {
+        background: #fff;
+        margin-top: 16px;
+        padding: 14px 16px 18px;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--color-border);
+    }
+    .site-navbar .navbar-nav { gap: 2px; }
+    .site-navbar .nav-link { padding: 12px 16px !important; border-radius: 12px; }
+    .site-navbar .nav-link:hover,
+    .site-navbar .nav-link.active { background: var(--color-bg-warm); }
+    .site-navbar .nav-item .btn { width: 100%; text-align: center; }
+    .nav-divider-mobile { height: 1px; background: var(--color-border); margin: 10px 4px; }
+    .cta-banner { padding: 40px 28px; text-align: center; }
+}
+
+/* ---- Large phone / small tablet ---- */
+@media (max-width: 767px) {
+    .section { padding: 56px 0; }
+    .section-heading h2 { font-size: 1.6rem; }
+    .stat-band { grid-template-columns: repeat(2, 1fr); }
+    .form-section { padding: 26px 20px; }
+    .form-section .section-hint { margin-left: 0; }
+    .detail-grid { grid-template-columns: 1fr; }
+    .dash-body { margin-top: -22px; }
+    .profile-sticky-actions { flex-direction: column; align-items: stretch; text-align: center; }
+    .cta-banner .row { text-align: center; }
+    .cta-banner .btn { width: 100%; }
+    .footer-bottom { flex-direction: column; text-align: center; justify-content: center; }
+    .nav-search { margin-left:15px;  }  
+}
+
+/* ---- Phone ---- */
+@media (max-width: 575px) {
+    .container-narrow { padding: 0 18px; }
+    .hero { padding: 118px 0 64px; }
+    .hero .hero-cta { flex-direction: column; align-items: stretch; }
+    .hero .hero-cta .btn { width: 100%; text-align: center; }
+    .hero .hero-stats { gap: 22px; }
+    .auth-card { padding: 30px 20px 26px; }
+    .quick-actions { grid-template-columns: 1fr; }
+    .vp-photo-wrap { width: 132px; height: 132px; }
+    .page-header, .profile-page-header, .dash-hero, .vp-hero { padding-top: 118px; }
+    .back-to-top { right: 14px; bottom: 14px; width: 42px; height: 42px; }
+    .nav-search { margin-left:15px;  }
+}
+
+/* Prevent any accidental horizontal overflow site-wide */
+html, body { max-width: 100%; overflow-x: hidden; }
+img, svg { max-width: 100%; height: auto; }

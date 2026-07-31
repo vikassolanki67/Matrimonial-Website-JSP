@@ -1,0 +1,198 @@
+/* ==========================================================================
+   PROFILE.CSS — Create Profile / Edit Profile forms + View Profile display
+   ========================================================================== */
+
+.profile-page-header { background: var(--gradient-soft); padding: 140px 0 50px; }
+.profile-page-header .eyebrow { margin-bottom: 8px; }
+.profile-page-header h1 { font-size: clamp(1.7rem, 3.6vw, 2.4rem); }
+.profile-page-header p { color: var(--color-ink-soft); max-width: 560px; }
+
+.profile-form-wrap { padding: 50px 0 90px; }
+
+/* Section = one <h1> block from the original markup, restyled as a card */
+.form-section {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+    padding: 34px 32px;
+    margin-bottom: 26px;
+}
+.form-section .section-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+.form-section .section-title .num {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: var(--gradient-brand);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.form-section .section-title h4 { margin: 0; font-size: 1.15rem; }
+.form-section .section-hint { color: var(--color-ink-soft); font-size: 0.85rem; margin: -14px 0 20px 48px; }
+
+.form-section label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--color-ink);
+}
+.form-section .form-control,
+.form-section .form-select,
+.form-section textarea.form-control {
+    border-radius: 12px;
+    border: 1.5px solid var(--color-border);
+    background: #FBFAFC;
+    padding: 11px 14px;
+    font-size: 0.94rem;
+}
+.form-section .form-control:focus,
+.form-section .form-select:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 4px rgba(233,30,99,0.10);
+    background: #fff;
+}
+.form-section .form-text { font-size: 0.78rem; }
+
+.profile-sticky-actions {
+    position: sticky;
+    bottom: 18px;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.profile-sticky-actions .save-hint { font-size: 0.85rem; color: var(--color-ink-soft); }
+
+/* Photo upload preview (used on index.jsp upload step) */
+.photo-drop {
+    border: 1.5px dashed var(--color-secondary);
+    border-radius: var(--radius-lg);
+    background: var(--gradient-soft);
+    padding: 40px 24px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.25s ease;
+}
+.photo-drop:hover { background: #FBEFF5; }
+.photo-drop input[type="file"] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer;
+}
+.photo-drop .preview-avatar {
+    width: 110px; height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 16px;
+    border: 3px solid #fff;
+    box-shadow: var(--shadow-sm);
+    display: block;
+}
+.photo-drop i.upload-icon { font-size: 2rem; color: var(--color-secondary); margin-bottom: 10px; display: block; }
+
+/* ---- View profile display ------------------------------------------------- */
+.vp-hero {
+    background: var(--gradient-brand);
+    padding: 140px 0 90px;
+    color: #fff;
+    position: relative;
+}
+.vp-photo-wrap {
+    width: 168px; height: 168px;
+    border-radius: 50%;
+    padding: 6px;
+    background: #fff;
+    box-shadow: var(--shadow-lg);
+    margin: 0 auto 18px;
+}
+.vp-photo-wrap img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; }
+.vp-hero h1 { color: #fff; font-size: clamp(1.5rem, 3vw, 2.1rem); margin-bottom: 4px; text-align: center; }
+.vp-hero .vp-subline { text-align: center; color: rgba(255,255,255,0.85); }
+.vp-hero .vp-badges { display: flex; justify-content: center; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.vp-hero .vp-badge {
+    background: rgba(255,255,255,0.16);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: var(--radius-pill);
+    padding: 6px 16px;
+    font-size: 0.82rem;
+}
+
+.vp-body { 
+    margin-top: 20px;
+    padding-bottom: 90px;
+    position: relative; z-index: 3;
+}
+
+.vp-detail-card {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+    padding: 30px 32px;
+    margin-bottom: 24px;
+}
+.vp-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 14px;
+}
+.vp-gallery-item {
+    display: block;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.vp-gallery-item:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.vp-gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.profile-gallery-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    color: var(--color-secondary);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+.profile-gallery-link:hover { color: var(--color-primary); }
+.vp-detail-card h4 {
+    font-size: 1.05rem;
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 20px;
+}
+.vp-detail-card h4 i { color: var(--color-primary); }
+
+.detail-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px 26px; }
+.detail-item span.label {
+    display: block;
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-ink-soft);
+    margin-bottom: 3px;
+}
+.detail-item span.value { font-weight: 600; font-size: 0.96rem; }
+
+.vp-bio-text { color: var(--color-ink-soft); line-height: 1.8; }
+
+.vp-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 6px; }
+
+@media (max-width: 767px) {
+    .detail-grid { grid-template-columns: 1fr; }
+}
