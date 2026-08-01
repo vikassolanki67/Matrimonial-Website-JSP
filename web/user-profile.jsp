@@ -20,7 +20,7 @@
 <% }
     if ("success".equals(mess)) {
 %>
-        <div class="alert-soft alert-soft-success mb-3"><i class="bi bi-exclamation-circle-fill"></i><span>Requeste send</span></div>
+        <div class="alert-soft alert-soft-success mb-3"><i class="bi bi-exclamation-circle-fill"></i><span>Request send</span></div>
 <% }
     
     String usercode = request.getParameter("id");
@@ -62,7 +62,14 @@
             relStatus = rs4.getString("status");
              relFromCode = rs4.getString("from_code");
         }
-
+        String isSaved = "no";
+        Statement stSave = cn.createStatement();
+        ResultSet rsSave = stSave.executeQuery(
+            "select * from saved_profiles where loginemail='" + email + "' AND otheremail='" + contactEmailForLookup + "'");
+        if (rsSave.next()) {
+            isSaved = "yes";
+        }   
+        
         Statement st2 = cn.createStatement();
         ResultSet rs = st2.executeQuery("select * from profile_table where contact_email='" + contactEmailForLookup + "'");
 
@@ -207,6 +214,15 @@
                 </div>
                 <div class="vp-actions reveal">
                     <a href="search_record.jsp" class="btn btn-outline-brand flex-fill text-center" onclick="history.back();return false;"><i class="bi bi-arrow-left"></i> Back to Results</a>
+                    <% if ("yes".equals(isSaved)) { %>
+                    <a href="toggle_save.jsp?id=<%= usercode %>" class="btn btn-outline-brand flex-fill text-center">
+                        <i class="bi bi-bookmark-check-fill"></i> Saved
+                    </a>
+                <% } else { %>
+                    <a href="toggle_save.jsp?id=<%= usercode %>" class="btn btn-outline-brand flex-fill text-center">
+                        <i class="bi bi-bookmark-plus"></i> Save
+                    </a>
+                <% } %>
                     <a href="search.jsp" class="btn btn-brand flex-fill text-center"><i class="bi bi-search"></i> New Search</a>
                     <% if (relStatus == null || "-1".equals(relStatus) || "-2".equals(relStatus)) { %>
                         <a href="interested_process.jsp?id=<%= usercode %>" class="btn btn-brand flex-fill text-center">Interested</a>
