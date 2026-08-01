@@ -54,7 +54,7 @@
                     Cookie c = new Cookie("email", email);
                     c.setMaxAge(60*60*24);
                     session.setAttribute(email,storedPass);
-                    session.setMaxInactiveInterval(1200);
+                    session.setMaxInactiveInterval(60*60);
                     response.addCookie(c);
                     response.sendRedirect("Dashboard.jsp");
                 }
