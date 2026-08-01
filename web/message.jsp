@@ -20,6 +20,16 @@ String err = request.getParameter("err");
     <div class="alert-soft alert-soft-success mb-3"><i class="bi bi-check-circle-fill"></i><span>Message sent successfully.</span></div>
 <%
    }
+   if ("delete".equals(mess)) {
+%>
+    <div class="alert-soft alert-soft-success mb-3"><i class="bi bi-check-circle-fill"></i><span>Message deleted.</span></div>
+<%
+   }
+   if ("nodata".equals(mess)) {
+%>
+<div class="alert-soft alert-soft-danger mb-3"><i class="bi bi-exclamation-circle-fill"></i><span>not available</span></div>
+<%
+   }
 
     Cookie ct[] = request.getCookies();
     String loginemail = null;
