@@ -27,7 +27,7 @@
     }
 
     if (message == null || message.trim().isEmpty()) {
-        response.sendRedirect("message.jsp?err=empty");
+        response.sendRedirect("message.jsp?err=empty&id="+usercode);
         return;
     }
 
@@ -60,7 +60,7 @@
         if (rs.next()) {
             useremail = rs.getString("email");
         } else {
-            response.sendRedirect("message.jsp?err=usernotfound");
+            response.sendRedirect("message.jsp?err=usernotfound&id="+usercode);
             return;
         }
 
@@ -84,9 +84,9 @@
         ps.setString(4, message);
 
         if (ps.executeUpdate() > 0) {
-            response.sendRedirect("message.jsp?mess=success");
+            response.sendRedirect("message.jsp?mess=success&id="+usercode);
         } else {
-            response.sendRedirect("message.jsp?err=nosend");
+            response.sendRedirect("message.jsp?err=nosend&id="+usercode);
         }
 
         ps.close();
