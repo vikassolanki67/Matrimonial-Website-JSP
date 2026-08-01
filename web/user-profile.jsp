@@ -179,6 +179,32 @@
                         <div class="detail-item"><span class="label">Contact Email</span><span class="value"><%= contact_email %></span></div>
                     </div>
                 </div>
+                <div class="vp-detail-card reveal mt-4">
+                    <h4><i class="bi bi-images"></i> Gallery</h4>
+                    <div class="vp-gallery-grid">
+                        <%
+                        Statement st5 = cn.createStatement();
+                        ResultSet rs5 = st5.executeQuery("SELECT * FROM gallery WHERE usercode='"+photo+"' ORDER BY sn");
+
+                        boolean hasGalleryPhotos = false;
+                        while(rs5.next())
+                        {
+                            hasGalleryPhotos = true;
+                            int sn = rs5.getInt("sn");
+                        %>
+                        <a href="gallery/<%=photo%>/<%=sn%>.jpg" target="_blank" class="vp-gallery-item">
+                            <img src="gallery/<%=photo%>/<%=sn%>.jpg" alt="Gallery photo <%=sn%>">
+                        </a>
+                        <%
+                        }
+                        if(!hasGalleryPhotos){
+                        %>
+                        <p class="text-muted mb-0">No extra photos yet. <a href="upload_multiple.jsp">Add some</a>.</p>
+                        <%
+                        }
+                        %>
+                    </div>
+                </div>
                 <div class="vp-actions reveal">
                     <a href="search_record.jsp" class="btn btn-outline-brand flex-fill text-center" onclick="history.back();return false;"><i class="bi bi-arrow-left"></i> Back to Results</a>
                     <a href="search.jsp" class="btn btn-brand flex-fill text-center"><i class="bi bi-search"></i> New Search</a>
