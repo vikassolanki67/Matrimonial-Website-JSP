@@ -71,6 +71,7 @@
         </a>
         <p><%= latestMessage %></p>
         <small><%= latestDt %></small>
+        <a href="message.jsp?id=<%= usercode %> "class="btn btn-brand flex-fill text-center">Message</a>
     </div>
 <%
         }
