@@ -65,22 +65,39 @@
 <% request.setAttribute("pageTitle", "Requests — Vivaah Circle"); %>
 <jsp:include page="includes/header.jsp" />
 
-<!-- Plain, unstyled on purpose -- design this yourself as planned. -->
-<div style="padding-top:140px; padding-bottom:60px; max-width:700px; margin:0 auto;">
-    <h1>Interest Requests</h1>
+<header class="profile-page-header">
+    <div class="container-narrow">
+        <span class="eyebrow">Notifications</span>
+        <h1>Interest Requests</h1>
+        <p>People who are interested in connecting with you.</p>
+    </div>
+</header>
 
-    <% if (pendingRequests.isEmpty()) { %>
-        <p>No pending requests right now.</p>
-    <% } else {
-        for (Map<String,String> req : pendingRequests) {
-    %>
-        <div style="display:flex; align-items:center; gap:16px; margin-bottom:16px;">
-            <img src="upload/<%=req.get("code")%>.jpg" alt="" width="60" height="60" onerror="this.onerror=null;this.src='assets/images/default-profile.svg';">
-            <span><%=req.get("name")%></span>
-            <a href="request_pending.jsp?id=<%=req.get("code")%>">View Profile</a>
-        </div>
-    <%  }
-    } %>
-</div>
+<section class="profile-form-wrap">
+    <div class="container-narrow">
+        <% if (pendingRequests.isEmpty()) { %>
+            <div class="people-empty">
+                <i class="bi bi-inbox"></i>
+                <p class="mb-0">No pending requests right now.</p>
+            </div>
+        <% } else { %>
+            <div class="people-list">
+            <% for (Map<String,String> req : pendingRequests) { %>
+                <div class="person-card">
+                    <img class="person-avatar" src="upload/<%=req.get("code")%>.jpg" alt=""
+                         onerror="this.onerror=null;this.src='assets/images/default-profile.svg';">
+                    <div class="person-info">
+                        <h5><%=req.get("name")%></h5>
+                        <span class="person-meta">Wants to connect with you</span>
+                    </div>
+                    <div class="person-actions">
+                        <a href="request_pending.jsp?id=<%=req.get("code")%>" class="btn btn-brand btn-sm">View Profile</a>
+                    </div>
+                </div>
+            <% } %>
+            </div>
+        <% } %>
+    </div>
+</section>
 
 <jsp:include page="includes/footer.jsp" />
