@@ -45,6 +45,7 @@
 <link href="assets/css/auth.css" rel="stylesheet">
 <link href="assets/css/dashboard.css" rel="stylesheet">
 <link href="assets/css/profile.css" rel="stylesheet">
+<link href="assets/css/people-list.css" rel="stylesheet">
 <link href="assets/css/responsive.css" rel="stylesheet">
 
 <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
