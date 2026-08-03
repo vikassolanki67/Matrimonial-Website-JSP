@@ -22,7 +22,6 @@
             ResultSet rs = st.executeQuery("select * from registration_table where email='"+email +"'");    
             String code = null;
             if(rs.next()){
-                out.println(code);
                code =  rs.getString("usercode");
             }
              if(code == null){
