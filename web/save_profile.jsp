@@ -56,20 +56,40 @@
 %>
 <% request.setAttribute("pageTitle", "Saved Profiles — Vivaah Circle"); %>
 <jsp:include page="includes/header.jsp" />
-<!-- Plain, unstyled on purpose -- design this yourself as planned. -->
-<div style="padding-top:140px; padding-bottom:60px; max-width:700px; margin:0 auto;">
-    <h1>Saved Profiles</h1>
-    <% if (saved.isEmpty()) { %>
-        <p>You haven't saved any profiles yet.</p>
-    <% } else {
-        for (Map<String,String> row : saved) {
-    %>
-        <div style="display:flex; align-items:center; gap:16px; margin-bottom:16px;">
-            <img src="upload/<%=row.get("code")%>.jpg" alt="" width="60" height="60" onerror="this.onerror=null;this.src='assets/images/default-profile.svg';">
-            <span><%=row.get("name")%></span>
-            <a href="user-profile.jsp?id=<%=row.get("code")%>">View Profile</a>
-        </div>
-    <%  }
-    } %>
-</div>
+
+<header class="profile-page-header">
+    <div class="container-narrow">
+        <span class="eyebrow">Bookmarks</span>
+        <h1>Saved Profiles</h1>
+        <p>Profiles you've bookmarked to revisit later.</p>
+    </div>
+</header>
+
+<section class="profile-form-wrap">
+    <div class="container-narrow">
+        <% if (saved.isEmpty()) { %>
+            <div class="people-empty">
+                <i class="bi bi-bookmark-heart"></i>
+                <p class="mb-0">You haven't saved any profiles yet.</p>
+            </div>
+        <% } else { %>
+            <div class="people-list">
+            <% for (Map<String,String> row : saved) { %>
+                <div class="person-card">
+                    <img class="person-avatar" src="upload/<%=row.get("code")%>.jpg" alt=""
+                         onerror="this.onerror=null;this.src='assets/images/default-profile.svg';">
+                    <div class="person-info">
+                        <h5><%=row.get("name")%></h5>
+                        <span class="person-meta">Saved profile</span>
+                    </div>
+                    <div class="person-actions">
+                        <a href="user-profile.jsp?id=<%=row.get("code")%>" class="btn btn-brand btn-sm">View Profile</a>
+                    </div>
+                </div>
+            <% } %>
+            </div>
+        <% } %>
+    </div>
+</section>
+
 <jsp:include page="includes/footer.jsp" />
