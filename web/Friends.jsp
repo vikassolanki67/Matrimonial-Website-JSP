@@ -69,27 +69,43 @@
         out.println("Profile lookup error: " + er.getMessage());
     }
 %>
-<% request.setAttribute("pageTitle", "Requests — Vivaah Circle"); %>
+<% request.setAttribute("pageTitle", "Friends — Vivaah Circle"); %>
 <jsp:include page="includes/header.jsp" />
 
-<!-- Plain, unstyled on purpose -- design this yourself as planned. -->
-<div style="padding-top:140px; padding-bottom:60px; max-width:700px; margin:0 auto;">
-    <h1>Interest Requests</h1>
+<header class="profile-page-header">
+    <div class="container-narrow">
+        <span class="eyebrow">Connections</span>
+        <h1>Friends</h1>
+        <p>Everyone you're currently connected with.</p>
+    </div>
+</header>
 
-    <% if (friends.isEmpty()) { %>
-        <p>No pending requests right now.</p>
-    <% } else {
-        for (Map<String,String> req : friends) {
-    %>
-        <div style="display:flex; align-items:center; gap:16px; margin-bottom:16px;">
-            <img src="upload/<%=req.get("code")%>.jpg" alt="" width="60" height="60" onerror="this.onerror=null;this.src='assets/images/default-profile.svg';">
-            <span><%=req.get("name")%></span>
-            <a href="user-profile.jsp?id=<%=req.get("code")%>">View Profile</a>
-            &nbsp;
-            <a href="message.jsp?id=<%=req.get("code")%>">Message</a>
-        </div>
-    <%  }
-    } %>
-</div>
+<section class="profile-form-wrap">
+    <div class="container-narrow">
+        <% if (friends.isEmpty()) { %>
+            <div class="people-empty">
+                <i class="bi bi-heart"></i>
+                <p class="mb-0">No connections yet. Send an interest request from a profile to get started.</p>
+            </div>
+        <% } else { %>
+            <div class="people-list">
+            <% for (Map<String,String> req : friends) { %>
+                <div class="person-card">
+                    <img class="person-avatar" src="upload/<%=req.get("code")%>.jpg" alt=""
+                         onerror="this.onerror=null;this.src='assets/images/default-profile.svg';">
+                    <div class="person-info">
+                        <h5><%=req.get("name")%></h5>
+                        <span class="person-meta">Connected</span>
+                    </div>
+                    <div class="person-actions">
+                        <a href="user-profile.jsp?id=<%=req.get("code")%>" class="btn btn-outline-brand btn-sm">View Profile</a>
+                        <a href="message.jsp?id=<%=req.get("code")%>" class="btn btn-brand btn-sm">Message</a>
+                    </div>
+                </div>
+            <% } %>
+            </div>
+        <% } %>
+    </div>
+</section>
 
 <jsp:include page="includes/footer.jsp" />
