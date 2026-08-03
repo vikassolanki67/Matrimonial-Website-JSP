@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" import="java.sql.*"%>
 <%
     Cookie ct[] = request.getCookies();
     String email = null;
@@ -67,10 +67,15 @@
                 <h5>Edit Profile</h5>
                 <p>Update your details any time</p>
             </a>
-            <a href="logout.jsp" class="action-tile action-tile--danger reveal">
-                <div class="icon-tile mx-auto"><i class="bi bi-box-arrow-right"></i></div>
-                <h5>Log Out</h5>
-                <p>End your session securely</p>
+            <a href="save_profile.jsp" class="action-tile reveal">
+                <div class="icon-tile mx-auto"><i class="bi bi-bookmark-heart"></i></div>
+                <h5>Saved Profiles</h5>
+                <p>Revisit profiles you bookmarked</p>
+            </a>
+            <a href="Friends.jsp" class="action-tile reveal">
+                <div class="icon-tile mx-auto"><i class="bi bi-heart"></i></div>
+                <h5>Friends</h5>
+                <p>See everyone you're connected with</p>
             </a>
             <a href="search.jsp" class="action-tile reveal">
                 <div class="icon-tile mx-auto"><i class="bi bi-search-heart"></i></div>
@@ -83,14 +88,6 @@
             <div class="dash-stat-card">
                 <div class="icon-tile mb-0"><i class="bi bi-eye"></i></div>
                 <div><strong>&mdash;</strong><span>Profile views (insights coming soon)</span></div>
-            </div>
-            <div class="dash-stat-card">
-                <div class="icon-tile mb-0"><i class="bi bi-heart"></i></div>
-                <div><strong>&mdash;</strong><span>New matches (insights coming soon)</span></div>
-            </div>
-            <div class="dash-stat-card">
-                <div class="icon-tile mb-0"><i class="bi bi-chat-dots"></i></div>
-                <div><strong>&mdash;</strong><span>Messages (insights coming soon)</span></div>
             </div>
         </div>
 
