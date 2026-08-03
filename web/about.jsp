@@ -142,21 +142,21 @@
             </div>
             <div class="col-sm-6 col-lg-3 reveal">
                 <div class="card-elevated feature-card text-center">
-                    <div class="avatar-initials mx-auto mb-3" style="width:64px;height:64px;font-size:1.2rem;">PJ</div>
+                    <div class="avatar-initials mx-auto mb-3" style="width:64px;height:64px;font-size:1.2rem;">TS</div>
                     <h5 class="mb-0">Tamanna Solanki</h5>
                     <span class="text-muted small">UI &amp; Design</span>
                 </div>
             </div>
             <div class="col-sm-6 col-lg-3 reveal">
                 <div class="card-elevated feature-card text-center">
-                    <div class="avatar-initials mx-auto mb-3" style="width:64px;height:64px;font-size:1.2rem;">PS</div>
+                    <div class="avatar-initials mx-auto mb-3" style="width:64px;height:64px;font-size:1.2rem;">RS</div>
                     <h5 class="mb-0">Ruhi Solanki</h5>
                     <span class="text-muted small"> Frontend &amp;Profile System</span>
                 </div>
             </div>
             <div class="col-sm-6 col-lg-3 reveal">
                 <div class="card-elevated feature-card text-center">
-                    <div class="avatar-initials mx-auto mb-3" style="width:64px;height:64px;font-size:1.2rem;">RS</div>
+                    <div class="avatar-initials mx-auto mb-3" style="width:64px;height:64px;font-size:1.2rem;">TS</div>
                     <h5 class="mb-0">Tamvik Solanki</h5>
                     <span class="text-muted small">Quality &amp; Testing</span>
                 </div>
