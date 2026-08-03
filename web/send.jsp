@@ -17,10 +17,8 @@
         response.sendRedirect("login.jsp");
         return;
     }
-%>
-<html><body>
-<h2>Sent Messages</h2>
-<%
+
+    List<Map<String,String>> sentList = new ArrayList<Map<String,String>>();
     try {
         Class.forName("com.mysql.jdbc.Driver");
         Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/matrimonial","root","");
@@ -43,7 +41,7 @@
             if (rs2.next()) {
                 latestMessage = rs2.getString("message");
             }
-            rs2.close(); 
+            rs2.close();
             ps2.close();
 
             PreparedStatement ps3 = cn.prepareStatement(
@@ -51,33 +49,66 @@
             ps3.setString(1, toEmail);
             ResultSet rs3 = ps3.executeQuery();
             String usercode = "";
-            String fullname = "";
+            String fullname = toEmail;
             if (rs3.next()) {
                 usercode = rs3.getString("usercode");
                 String fname = rs3.getString("fname") == null ? "" : rs3.getString("fname");
                 String lname = rs3.getString("lname") == null ? "" : rs3.getString("lname");
                 fullname = (fname + " " + lname).trim();
             }
-            rs3.close(); 
+            rs3.close();
             ps3.close();
-%>
-    <div style="border:1px solid #ccc; padding:10px; margin:8px;">
-        <a href="user-profile.jsp?id=<%= usercode %>">
-            <img src="upload/<%= usercode %>.jpg" width="50" height="50"
-                 onerror="this.onerror=null;this.src='assets/images/default-profile.svg';">
-            <b><%= fullname %></b>
-        </a>
-        <p><%= latestMessage %></p>
-        <small><%= latestDt %></small>
-        <a href="message.jsp?id=<%= usercode %> "class="btn btn-brand flex-fill text-center">Message</a>
-    </div>
-<%
+
+            Map<String,String> row = new HashMap<String,String>();
+            row.put("code", usercode);
+            row.put("name", fullname);
+            row.put("latest", latestMessage);
+            row.put("dt", latestDt);
+            sentList.add(row);
         }
-        rs.close(); 
+        rs.close();
         ps.close();
         cn.close();
     } catch (Exception e) {
         out.println(e.getMessage());
     }
 %>
-</body></html>
+<% request.setAttribute("pageTitle", "Sent — Vivaah Circle"); %>
+<jsp:include page="includes/header.jsp" />
+
+<header class="profile-page-header">
+    <div class="container-narrow">
+        <span class="eyebrow">Messages</span>
+        <h1>Sent</h1>
+        <p>Conversations you've started.</p>
+    </div>
+</header>
+
+<section class="profile-form-wrap">
+    <div class="container-narrow">
+        <% if (sentList.isEmpty()) { %>
+            <div class="people-empty">
+                <i class="bi bi-send"></i>
+                <p class="mb-0">You haven't sent any messages yet.</p>
+            </div>
+        <% } else { %>
+            <div class="people-list">
+            <% for (Map<String,String> row : sentList) { %>
+                <a href="message.jsp?id=<%= row.get("code") %>" class="person-card" style="text-decoration:none; color:inherit;">
+                    <img class="person-avatar" src="upload/<%= row.get("code") %>.jpg" alt=""
+                         onerror="this.onerror=null;this.src='assets/images/default-profile.svg';">
+                    <div class="person-info">
+                        <h5><%= row.get("name") %></h5>
+                        <span class="person-latest"><%= row.get("latest") %></span>
+                    </div>
+                    <div class="person-actions">
+                        <span class="person-meta"><%= row.get("dt") %></span>
+                    </div>
+                </a>
+            <% } %>
+            </div>
+        <% } %>
+    </div>
+</section>
+
+<jsp:include page="includes/footer.jsp" />
