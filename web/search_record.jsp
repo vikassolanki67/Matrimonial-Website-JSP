@@ -45,12 +45,7 @@
 
 <section class="profile-form-wrap">
     <div class="container-narrow">
-        <div class="table-responsive">
-            <table class="table align-middle search-results-table">
-                <thead>
-                    <tr><th>Name</th><th>Gender</th><th>Caste</th><th>Religion</th><th>DOB</th><th>Occupation</th><th></th></tr>
-                </thead>
-                <tbody>
+        <div class="match-grid">
 <%
     try {
         Class.forName("com.mysql.jdbc.Driver");
@@ -78,31 +73,36 @@
             hasResults = true;
             String usercode = rs.getString("usercode");
 %>
-                    <tr>
-                        <td><%= rs.getString("full_name") %></td>
-                        <td><%= rs.getString("gender") %></td>
-                        <td><%= rs.getString("caste") %></td>
-                        <td><%= rs.getString("religion") %></td>
-                        <td><%= rs.getString("dob") %></td>
-                        <td><%= rs.getString("profession") %></td>
-                        <td><a href="user-profile.jsp?id=<%= usercode %>" class="btn btn-brand btn-sm">View</a></td>
-                    </tr>
+            <div class="match-card">
+                <img class="match-avatar" src="upload/<%= usercode %>.jpg" alt="<%= rs.getString("full_name") %>"
+                     onerror="this.onerror=null;this.src='assets/images/default-profile.svg';">
+                <h5><%= rs.getString("full_name") %></h5>
+                <p class="match-sub"><%= rs.getString("profession") %></p>
+                <div class="match-meta">
+                    <span><%= rs.getString("gender") %></span>
+                    <span><%= rs.getString("caste") %></span>
+                    <span><%= rs.getString("religion") %></span>
+                    <span><%= rs.getString("dob") %></span>
+                </div>
+                <a href="user-profile.jsp?id=<%= usercode %>" class="btn btn-brand">View Profile</a>
+            </div>
 <%
         }
         if (!hasResults) {
 %>
-                    <tr><td colspan="7" class="text-center text-muted py-4">No matching profiles found. Try widening your filters.</td></tr>
+            <div class="people-empty" style="grid-column: 1 / -1;">
+                <i class="bi bi-search"></i>
+                <p class="mb-0">No matching profiles found. Try widening your filters.</p>
+            </div>
 <%
         }
         cn.close();
     } catch (Exception er) {
-        out.println("<tr><td colspan='7'>Search error: " + er.getMessage() + "</td></tr>");
+        out.println("<p class='text-danger'>Search error: " + er.getMessage() + "</p>");
     }
 %>
-                </tbody>
-            </table>
         </div>
-        <div class="mt-3">
+        <div class="mt-4">
             <a href="search.jsp" class="btn btn-outline-brand"><i class="bi bi-arrow-left"></i> New Search</a>
         </div>
     </div>
