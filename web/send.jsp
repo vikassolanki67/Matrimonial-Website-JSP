@@ -94,7 +94,7 @@
         <% } else { %>
             <div class="people-list">
             <% for (Map<String,String> row : sentList) { %>
-                <a href="message.jsp?id=<%= row.get("code") %>" class="person-card" style="text-decoration:none; color:inherit;">
+                <a href="message.jsp?id=<%= row.get("code")%>&from=send" class="person-card" style="text-decoration:none; color:inherit;">
                     <img class="person-avatar" src="upload/<%= row.get("code") %>.jpg" alt=""
                          onerror="this.onerror=null;this.src='assets/images/default-profile.svg';">
                     <div class="person-info">
