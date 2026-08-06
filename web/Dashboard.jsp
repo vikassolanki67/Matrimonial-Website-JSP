@@ -82,6 +82,11 @@
                 <h5>Search Members</h5>
                 <p>Find profiles by gender, caste &amp; religion</p>
             </a>
+            <a href="block.jsp" class="action-tile reveal">
+                <div class="icon-tile mx-auto"><i class="bi bi-slash-circle"></i></div>
+                <h5>Blocked Users</h5>
+                <p>Manage profiles you've blocked</p>
+            </a>
         </div>
 
         <div class="dash-stats reveal">
