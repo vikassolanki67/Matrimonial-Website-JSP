@@ -91,7 +91,7 @@
                         <span class="person-meta">Wants to connect with you</span>
                     </div>
                     <div class="person-actions">
-                        <a href="request_pending.jsp?id=<%=req.get("code")%>" class="btn btn-brand btn-sm">View Profile</a>
+                        <a href="user-profile.jsp?id=<%=req.get("code")%>&from=request" class="btn btn-brand btn-sm">View Profile</a>
                     </div>
                 </div>
             <% } %>
