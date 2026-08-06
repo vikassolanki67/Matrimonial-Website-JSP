@@ -18,7 +18,11 @@
         response.sendRedirect("login.jsp");
         return;
     }
+    
+    String from = request.getParameter("from");
     String usercode = request.getParameter("id");
+    
+    
     if (usercode == null || usercode.trim().length() == 0) {
         response.sendRedirect("user-profile.jsp");
         return;
@@ -34,35 +38,62 @@
         Class.forName("com.mysql.jdbc.Driver");
         Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/matrimonial","root","");
 
-        Statement st1 = cn.createStatement();
-        ResultSet rs2 = st1.executeQuery("select * from registration_table where email='"+loginemail+"'");
+        PreparedStatement ps1 = cn.prepareStatement("SELECT usercode FROM registration_table WHERE email=?");
+        ps1.setString(1, loginemail);
+        ResultSet rs2 = ps1.executeQuery();
         if (rs2.next()) {
             logincode = rs2.getString("usercode");
         }
-        Statement st3 = cn.createStatement();
-        ResultSet rs3 = st3.executeQuery("select status from interested where ((from_code='" + logincode + "' AND to_code='" + usercode + "') OR (from_code='" + usercode + "' AND to_code='" + logincode + "')) AND status=1");
+        PreparedStatement ps2 = cn.prepareStatement("SELECT status FROM interested WHERE ((from_code=? AND to_code=?) OR (from_code=? AND to_code=?)) AND status=?");
+        ps2.setString(1, logincode);
+        ps2.setString(2, usercode);
+        ps2.setString(3, usercode);
+        ps2.setString(4, logincode);
+        ps2.setInt(5, 1);
+
+        ResultSet rs3 = ps2.executeQuery();
         if (!rs3.next()) {
-            response.sendRedirect("user-profile.jsp?id=" + usercode);
+            if ("inbox".equals(from)) {
+                response.sendRedirect("inbox.jsp");
+            } else if ("send".equals(from)) {
+                response.sendRedirect("send.jsp");
+            } else {
+                response.sendRedirect("user-profile.jsp?id=" + usercode);
+            }
+
             return;
         }
-        Statement st = cn.createStatement();
-        ResultSet rs = st.executeQuery("select * from registration_table where usercode='"+usercode+"'");
+        
+        PreparedStatement ps3 = cn.prepareStatement("SELECT * FROM registration_table WHERE usercode=?"); 
+        ps3.setString(1, usercode);
+        ResultSet rs = ps3.executeQuery();
         if (rs.next()) {
-            useremail = rs.getString("email");
-            String fname = rs.getString("fname") == null ? "" : rs.getString("fname");
-            String lname = rs.getString("lname") == null ? "" : rs.getString("lname");
-            fullname = (fname + " " + lname).trim();
+           
+           useremail = rs.getString("email");
+
+           String fname = rs.getString("fname") == null ? "" : rs.getString("fname");
+           String lname = rs.getString("lname") == null ? "" : rs.getString("lname");
+           fullname = (fname + " " + lname).trim();
         }
 
-        Statement st2 = cn.createStatement();
-        ResultSet rs1 = st2.executeQuery("select * from message WHERE (to_email='"+useremail+"' AND from_email='"+loginemail+"') OR (to_email='"+loginemail+"' AND from_email='"+useremail+"') ORDER BY dt");
+       PreparedStatement ps4 = cn.prepareStatement("SELECT * FROM message WHERE (to_email=? AND from_email=?) OR (to_email=? AND from_email=?) ORDER BY dt");
+
+        ps4.setString(1, useremail);
+        ps4.setString(2, loginemail);
+        ps4.setString(3, loginemail);
+        ps4.setString(4, useremail);
+
+        ResultSet rs1 = ps4.executeQuery();
 
         while (rs1.next()) {
+
             Map<String,String> row = new HashMap<String,String>();
+
             row.put("sn", String.valueOf(rs1.getInt("sn")));
             row.put("message", rs1.getString("message"));
             row.put("dt", rs1.getString("dt"));
             row.put("mine", rs1.getString("from_email").equals(loginemail) ? "yes" : "no");
+
             chat.add(row);
         }
         cn.close();
@@ -83,7 +114,7 @@
 
 <section class="profile-form-wrap">
     <div class="container-narrow" style="max-width:700px;">
-        <%
+        <%-- <%
             String errP = request.getParameter("err");
             if ("nosend".equals(errP)) {
         %>
@@ -100,7 +131,7 @@
         <% } else if ("nodata".equals(messP)) { %>
             <div class="alert-soft alert-soft-danger mb-3"><i class="bi bi-exclamation-circle-fill"></i><span>That message is not available.</span></div>
         <% } %>
-
+--%>
         <div class="chat-thread">
             <% if (chat.isEmpty()) { %>
                 <p class="text-muted text-center mb-0">No messages yet. Say hello!</p>
@@ -113,7 +144,7 @@
                         <%= row.get("message") %>
                         <span class="chat-time">
                             <%= row.get("dt") %>
-                            &nbsp;&middot;&nbsp;<a class="chat-delete" href="delete_message.jsp?sn=<%= row.get("sn") %>&id=<%= usercode %>">Delete</a>
+                            &nbsp;&middot;&nbsp;<a class="chat-delete" href="delete_message.jsp?sn=<%= row.get("sn") %>&id=<%= usercode %>"><i class="bi bi-trash3"></i></a>
                         </span>
                     </div>
                 </div>
