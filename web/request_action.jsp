@@ -21,7 +21,7 @@
 
     String senderCode = request.getParameter("id");
     String action = request.getParameter("action");
-    String from = request.getParameter("from"); 
+    
     
     if (senderCode == null || senderCode.trim().length() == 0 || action == null) {
         response.sendRedirect("requests.jsp");
@@ -72,12 +72,8 @@
         }
 
         if (ps.executeUpdate() > 0) {
-            if ("profile".equals(from)) {
                 response.sendRedirect("user-profile.jsp?id=" + senderCode);
-            } else {
-                response.sendRedirect("requests.jsp");
-            }
-            return;
+                return;
         }
         response.sendRedirect("requests.jsp");
 
