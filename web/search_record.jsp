@@ -23,6 +23,7 @@
     if (religion != null) { 
         religion = religion.trim();
     }
+   
 %>
 <% request.setAttribute("pageTitle", "Search Results — Vivaah Circle"); %>
 <jsp:include page="includes/header.jsp" />
@@ -52,11 +53,11 @@
         Connection cn = DriverManager.getConnection("jdbc:mysql://localhost:3306/matrimonial", "root", "");
 
         StringBuilder sql = new StringBuilder(
-            "select rt.usercode, pt.full_name, pt.gender, pt.caste, pt.religion, pt.dob, pt.profession "
-          + "from profile_table pt "
-          + "join registration_table rt on rt.email = pt.contact_email "
-          + "where pt.gender = '" + gender + "' AND rt.email != '"+email+"'" 
-                
+            "SELECT rt.usercode, pt.full_name, pt.gender, pt.caste, pt.religion, pt.dob, pt.profession " +
+            "FROM profile_table pt JOIN registration_table rt ON rt.email = pt.contact_email " +
+            "WHERE pt.gender = '" + gender + "' AND rt.email != '" + email + "' " +
+            "AND NOT EXISTS ( SELECT 1 FROM interested i WHERE i.status = 3 AND ((i.from_email = '" + email + "' AND i.to_email = rt.email) " +
+            "OR (i.to_email = '" + email + "' AND i.from_email = rt.email)))"
         );
         if (caste != null && caste.length() > 0) {
             sql.append(" and pt.caste = '").append(caste).append("'");
@@ -84,7 +85,7 @@
                     <span><%= rs.getString("religion") %></span>
                     <span><%= rs.getString("dob") %></span>
                 </div>
-                <a href="user-profile.jsp?id=<%= usercode %>" class="btn btn-brand">View Profile</a>
+                <a href="user-profile.jsp?id=<%= usercode %>&from=search" class="btn btn-brand">View Profile</a>
             </div>
 <%
         }
