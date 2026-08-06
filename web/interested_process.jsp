@@ -58,19 +58,19 @@
                     response.sendRedirect("user-profile.jsp?mess=exists&id="+usercode);
                 }
                 else if (status.equals("-1") || status.equals("-2")) {
-                PreparedStatement ps = cn.prepareStatement("UPDATE interested SET status = 0, from_email = ?, to_email = ?, from_code = ?, to_code = ? WHERE " +"((from_email = ? AND to_email = ?) OR (from_email = ? AND to_email = ?)) " +"AND (status = -1 OR status = -2)");
-                ps.setString(1, login_email);
-                ps.setString(2, useremail);
-                ps.setString(3, logincode);
-                ps.setString(4, usercode);
-                ps.setString(5, login_email);
-                ps.setString(6, useremail);
-                ps.setString(7, useremail);
-                ps.setString(8, login_email);
-                if (ps.executeUpdate() > 0) {
-                    response.sendRedirect("user-profile.jsp?mess=success&id=" + usercode);
-                }
-}
+                    PreparedStatement ps = cn.prepareStatement("UPDATE interested SET status = 0, from_email = ?, to_email = ?, from_code = ?, to_code = ? WHERE " +"((from_email = ? AND to_email = ?) OR (from_email = ? AND to_email = ?)) " +"AND (status = -1 OR status = -2)");
+                    ps.setString(1, login_email);
+                    ps.setString(2, useremail);
+                    ps.setString(3, logincode);
+                    ps.setString(4, usercode);
+                    ps.setString(5, login_email);
+                    ps.setString(6, useremail);
+                    ps.setString(7, useremail);
+                    ps.setString(8, login_email);
+                    if (ps.executeUpdate() > 0) {
+                        response.sendRedirect("user-profile.jsp?mess=success&id=" + usercode);
+                    }
+               }
             }
             else{
                 PreparedStatement ps = cn.prepareStatement("INSERT INTO interested (from_email, to_email, from_code, to_code) VALUES (?, ?, ?, ?)");
