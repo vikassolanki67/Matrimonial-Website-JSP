@@ -29,6 +29,7 @@
         return;
     }
     usercode = usercode.trim();
+    String from = request.getParameter("from");
 
     try {
         Class.forName("com.mysql.jdbc.Driver");
@@ -45,7 +46,18 @@
             response.sendRedirect("search.jsp");
             return;
         }
-        
+        PreparedStatement ps2 = cn.prepareStatement("SELECT status FROM interested WHERE ((from_email=? AND to_email=?) OR (from_email=? AND to_email=?)) AND status=?");
+        ps2.setString(1, email);
+        ps2.setString(2, contactEmailForLookup);
+        ps2.setString(3, contactEmailForLookup);
+        ps2.setString(4, email);
+        ps2.setInt(5, 3);
+
+        ResultSet rs14 = ps2.executeQuery();
+        if (rs14.next()) {
+            response.sendRedirect("Dashboard.jsp");
+            return;
+        }
         Statement st3 = cn.createStatement();
         ResultSet rs3 = st3.executeQuery("select * from registration_table where email='"+email+"'");
         String logincode =null;
@@ -61,6 +73,10 @@
         if (rs4.next()) {
             relStatus = rs4.getString("status");
              relFromCode = rs4.getString("from_code");
+        }
+        if ("3".equals(relStatus)) {
+            response.sendRedirect("search.jsp");
+            return;
         }
         String isSaved = "no";
         Statement stSave = cn.createStatement();
@@ -179,7 +195,7 @@
                         <div class="detail-item"><span class="label">Diet</span><span class="value"><%= diet %></span></div>
                     </div>
                 </div>
-                <div class="vp-detail-card reveal">
+                    <div class="vp-detail-card reveal">
                     <h4><i class="bi bi-telephone"></i> Contact Details</h4>
                     <div class="detail-grid" style="grid-template-columns:1fr;">
                         <div class="detail-item"><span class="label">Phone Number</span><span class="value"><%= phone %></span></div>
@@ -224,13 +240,25 @@
                     </a>
                 <% } %>
                     <a href="search.jsp" class="btn btn-brand flex-fill text-center"><i class="bi bi-search"></i> New Search</a>
-                    <% if (relStatus == null || "-1".equals(relStatus) || "-2".equals(relStatus)) { %>
+                    
+               <%   if ("search".equals(from)) {%>
+                        <a href="block_action.jsp?id=<%= usercode %>&from=search" class="btn btn-brand flex-fill "> Block</a>
+               <%   }
+                    else if("request".equals(from)){ 
+               %>
+                        <a href="block_action.jsp?id=<%= usercode %>&from=request" class="btn btn-brand flex-fill "> Block</a>
+               <%   }
+                    else{
+               %>
+                         <a href="block_action.jsp?id=<%= usercode %>" class="btn btn-brand flex-fill "> Block</a>
+               <%    }
+                    if (relStatus == null || "-1".equals(relStatus) || "-2".equals(relStatus)) { %>
                         <a href="interested_process.jsp?id=<%= usercode %>" class="btn btn-brand flex-fill text-center">Interested</a>
                     <%} else if ("0".equals(relStatus) && logincode.equals(relFromCode)) {%>
                         <a href="request_action.jsp?id=<%= usercode %>&action=withdraw&from=profile" class="btn btn-outline-brand flex-fill text-center">Cancel Request</a>
                     <%} else if ("0".equals(relStatus)) {%>
-                        <a href="request_action.jsp?id=<%= usercode %>&action=accept&from=profile" class="btn btn-brand flex-fill text-center">Accept</a>
-                        <a href="request_action.jsp?id=<%= usercode %>&action=decline&from=profile" class="btn btn-outline-brand flex-fill text-center">Reject</a>
+                        <a href="request_action.jsp?id=<%= usercode %>&action=accept" class="btn btn-brand flex-fill text-center">Accept</a>
+                        <a href="request_action.jsp?id=<%= usercode %>&action=decline" class="btn btn-outline-brand flex-fill text-center">Reject</a>
                     <% } else if ("1".equals(relStatus)) { %>
                         <a href="request_action.jsp?id=<%= usercode %>&action=cancel&from=profile" class="btn btn-outline-brand flex-fill text-center">Disconnect</a>
                         <a href="message.jsp?id=<%= usercode %> "class="btn btn-brand flex-fill text-center">Message</a>
