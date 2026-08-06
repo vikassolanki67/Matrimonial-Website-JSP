@@ -1,4 +1,4 @@
-<%-- 
+.,jhg<%-- 
     Document   : save_profile
     Created on : 1 Aug, 2026, 4:36:58 PM
     Author     : LENOVO
@@ -30,23 +30,35 @@
 
         while (rs1.next()) {
             String otherEmail = rs1.getString("otheremail");
+            PreparedStatement ps = cn.prepareStatement("select * from interested where (( to_email = ? AND from_email = ?) OR ( to_email = ? AND from_email = ?)) AND status = 3");
+            ps.setString(1,otherEmail );
+            ps.setString(2, login_email);
+            ps.setString(3, login_email);
+            ps.setString(4,otherEmail );
+            
+            ResultSet rs5 = ps.executeQuery();
+            if (rs5.next()) {
+                 continue;
+            }else{
+                PreparedStatement ps2 = cn.prepareStatement("select usercode, fname, lname from registration_table where email=?");
+                ps2.setString(1, otherEmail);
+                ResultSet rs2 = ps2.executeQuery();  
+                
+                String usercode = "";
+                String fullname = null;
+                if (rs2.next()) {
+                    usercode = rs2.getString("usercode");
+                    String fname = rs2.getString("fname") == null ? "" : rs2.getString("fname");
+                    String lname = rs2.getString("lname") == null ? "" : rs2.getString("lname");
+                    fullname = (fname + " " + lname).trim();
+                }
 
-            Statement st2 = cn.createStatement();
-            ResultSet rs2 = st2.executeQuery("select usercode, fname, lname from registration_table where email='"+otherEmail+"'");
-            String usercode = "";
-            String fullname = otherEmail;
-            if (rs2.next()) {
-                usercode = rs2.getString("usercode");
-                String fname = rs2.getString("fname") == null ? "" : rs2.getString("fname");
-                String lname = rs2.getString("lname") == null ? "" : rs2.getString("lname");
-                fullname = (fname + " " + lname).trim();
-            }
-
-            Map<String,String> row = new HashMap<String,String>();
-            row.put("code", usercode);
-            row.put("email", otherEmail);
-            row.put("name", fullname);
-            saved.add(row);
+                Map<String,String> row = new HashMap<String,String>();
+                row.put("code", usercode);
+                row.put("email", otherEmail);
+                row.put("name", fullname);
+                saved.add(row);
+            } 
         }
         cn.close();
     }
